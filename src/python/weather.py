@@ -71,8 +71,8 @@ def getWeather(guName):
     now = dt.datetime.now()
     currentDate = str(now.year) + str(format(now.month, '02')) + str(now.day)
 
-    #seoul_location.xlsx에서 입력한 구 이름과 일치하는 좌표 탐색 - 상대경로 후에 변경
-    location = pd.read_excel('../data/seoul_location.xlsx', engine='openpyxl')
+    #seoul_location.xlsx에서 입력한 구 이름과 일치하는 좌표 탐색
+    location = pd.read_excel('static/data/seoul_location.xlsx', engine='openpyxl')
     selectGu = location[location['구'] == guName]
 
 

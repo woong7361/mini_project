@@ -1,9 +1,9 @@
 function get_weather() {
 	let state_name = $("#state_input").val();
-	alert(`요청한 정보는 ${state_name}구 입니다.`);
+	alert(`요청한 정보는 ${state_name} 입니다.`);
 	$.ajax({
 		type: "GET",
-		url: `/apis/weather?state=${state_name}`, /* api 주소 넣는 부분 */
+		url: `http://localhost:5000/apis/weather?state=${state_name}`, /* api 주소 넣는 부분 */
 		data: {},
 		success: function(res) {
 			alert(`${state_name}구 에대한 응답을 수신하였습니다.`);
