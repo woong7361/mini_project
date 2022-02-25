@@ -1,0 +1,96 @@
+/* fonts */
+* {
+	font-family: 'Open Sans', sans-serif;
+}
+
+div.form-group > label {
+	font-size: 1.2rem;
+}
+
+/* layout */
+
+header {
+	width: 100%;
+	font-family: 'Open Sans', sans-serif;
+	background-image: url("https://nordicapis.com/wp-content/uploads/5-Best-Free-and-Paid-Weather-APIs-2019-e1587582023501.png");
+	background-position: center;
+	color: white;	
+	box-shadow: 2px 2px 4px black;
+	text-shadow: 2px 2px 2px black;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+div.weather {
+	padding: 20px 0 20px 0;
+	width: 70%;
+	min-width: 360px;
+	margin-bottom: 40px;
+	box-shadow: 1px 1px 3px black;
+	display: flex;
+	flex-direction: column;
+	justify-content: top;
+	align-items: center;
+}
+
+div.weather > form {
+	width: 70%;
+}
+
+div.form-group {
+	margin-bottom: 14px;
+	width:100%;
+}
+div.form-group > label {
+	margin-bottom: 4px;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+div#card-list {
+	width: 80%;
+	max-width: 1200px;
+	min-width: 800px;
+}
+
+/* header */
+
+/* card */
+img.card-img-top {
+	width: 60px;
+	margin: 20px 0 20px 12px;
+}
+
+p.card-text {
+	margin: 14px 0px 14px 0px;
+	font-size: 1.7rem;
+	text-shadow: 1px 1px 1px grey;
+	text-align: center;
+}
+
+.icons {
+	margin: 0px 8px 0px 8px;
+}
+
+.loading {
+	animation-name: loading;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+}
+
+.waiting {
+	animation-name: waiting;
+	animation-duration: 3s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes loading {
+  0%  {transform: rotate(0deg);}
+  100%  {transform: rotate(360deg);}
+}
+
+@keyframes waiting {
+  0%  {opacity: 1;}
+  50% {opacity: 0;}
+  100%  {opacity: 1;}
+}
+

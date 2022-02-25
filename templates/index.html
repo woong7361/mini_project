@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block script %}
+	<script src={{ url_for("static", filename="js/weather_animation.js") }}></script>
+	<script src={{ url_for("static", filename="js/weather_form_event.js") }}></script>
+{% endblock %}
+
+{% block header %}
+	{% include "weather/header.html" %}
+{% endblock %}
+
+{% block content %}
+	{% include "weather/form.html" %}
+	{% include "weather/cardlist.html" %}
+{% endblock %}
+
+
