@@ -1,6 +1,6 @@
 function check_form(){
-	let [email, comment, guselect] = [$("#comment-email").val(),$("#comment-text").val(),$("#guselect").val()];
-	if (email != "" && comment != "" && guselect != "") {
+	let guselect = $("#guselect").val();
+	if (guselect != "") {
 		$("#weather-submit").removeClass("btn-secondary");
 		$("#weather-submit").removeClass("disabled");
 		$("#weather-submit").addClass("btn-primary");
