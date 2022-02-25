@@ -15,10 +15,14 @@ def homework_get():
     weather = getWeather(guName)
     airCondition = getAirCondition(guName)
 
-    if weather == -1 or airCondition == -1:
-        return jsonify({"error": "!!no!!"})
+    if weather == -2 or airCondition == -2:
+        return jsonify({"message": "extern weather api error"})
 
-    return jsonify(dict(weather, **airCondition))
+    elif weather == -1 or airCondition == -1:
+        return jsonify({"message": "internal server error"})
+
+    else:
+        return jsonify(dict(weather, **airCondition))
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

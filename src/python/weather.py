@@ -30,33 +30,36 @@ def getAirCondition(guName):
     # 미세먼지(PM2.5) 24 시간 등급 pm10Grade1h
     # 미세먼지(PM10) 1 시간 등급 pm25Grade1h
 
+    try:
+        SERVICE_KEY = '6kDG3hNORaARv7W8cSUsMljgWXSesh6RWfGFzWp0nUc1wR2szvaeC5A/CkGkea0ShVlyPuokZ5zWzIvVeVHFwg=='
 
-    SERVICE_KEY = '6kDG3hNORaARv7W8cSUsMljgWXSesh6RWfGFzWp0nUc1wR2szvaeC5A/CkGkea0ShVlyPuokZ5zWzIvVeVHFwg=='
+        url = 'http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty'
+        params = {'serviceKey': SERVICE_KEY, 'returnType': 'json', 'numOfRows': '1',
+                  'pageNo': '1', 'stationName': guName, 'dataTerm': 'DAILY', 'ver': '1.0'}
 
-    url = 'http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty'
-    params = {'serviceKey': SERVICE_KEY, 'returnType': 'json', 'numOfRows': '1',
-              'pageNo': '1', 'stationName': guName, 'dataTerm': 'DAILY', 'ver': '1.0'}
+        response = requests.get(url, params=params)
 
-    response = requests.get(url, params=params)
-
-    # make response to dictionary
-    json = response.json()
+        # make response to dictionary
+        json = response.json()
 
 
-    result = -1
-    # confirm resultCode
-    if json['response']['header']['resultCode'] == '00':
-        # fail
-        if not json['response']['body']['items']:           #잘못된 주소 입력시 빈 리스트 반환
-            result = -1
-        # success
-        else:
-            #성공이라면 pm10 과 pm25 의 미세먼지 값을 tuple로 반환
-            json = response.json()
-            result = {
-                'pm10Value': json['response']['body']['items'][0]['pm10Value'],
-                'pm25Value': json['response']['body']['items'][0]['pm25Value']
-                }
+        result = -1
+        # confirm resultCode
+        if json['response']['header']['resultCode'] == '00':
+            # fail
+            if not json['response']['body']['items']:           #잘못된 주소 입력시 빈 리스트 반환
+                result = -1
+            # success
+            else:
+                #성공이라면 pm10 과 pm25 의 미세먼지 값을 tuple로 반환
+                json = response.json()
+                result = {
+                    'pm10Value': json['response']['body']['items'][0]['pm10Value'],
+                    'pm25Value': json['response']['body']['items'][0]['pm25Value']
+                    }
+    except Exception as e:
+        print(e)
+        result = -2
 
     return result
 
@@ -65,15 +68,20 @@ def getWeather(guName):
     # RN1     1 시간 강수량 mm
     # REH     습도 % 8
 
-    SERVICE_KEY = '6kDG3hNORaARv7W8cSUsMljgWXSesh6RWfGFzWp0nUc1wR2szvaeC5A/CkGkea0ShVlyPuokZ5zWzIvVeVHFwg=='
+    try:
+        SERVICE_KEY = '6kDG3hNORaARv7W8cSUsMljgWXSesh6RWfGFzWp0nUc1wR2szvaeC5A/CkGkea0ShVlyPuokZ5zWzIvVeVHFwg=='
 
-    #현재시간 parameter 생성
-    now = dt.datetime.now()
-    currentDate = str(now.year) + str(format(now.month, '02')) + str(now.day)
+        #현재시간 parameter 생성
+        now = dt.datetime.now()
+        currentDate = str(now.year) + str(format(now.month, '02')) + str(now.day)
 
-    #seoul_location.xlsx에서 입력한 구 이름과 일치하는 좌표 탐색
-    location = pd.read_excel('static/data/seoul_location.xlsx', engine='openpyxl')
-    selectGu = location[location['구'] == guName]
+        #seoul_location.xlsx에서 입력한 구 이름과 일치하는 좌표 탐색
+        location = pd.read_excel('static/data/seoul_location.xlsx', engine='openpyxl')
+        selectGu = location[location['구'] == guName]
+
+    except Exception as e:
+        print(e)
+        return -2
 
 
     result = -1
@@ -100,6 +108,9 @@ def getWeather(guName):
             for item in itemList:
                 if item['category'] == li:
                     result[list[li]] = item['obsrValue']
+
+
+
 
 
     return result
