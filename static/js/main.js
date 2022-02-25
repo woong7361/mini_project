@@ -1,23 +1,33 @@
 function get_weather() {
-	let state_name = $("#state_input").val();
-	alert(`요청한 정보는 ${state_name} 입니다.`);
+	let state_name = $("#guselect").val();
+	loading();
 	$.ajax({
 		type: "GET",
-		url: `http://localhost:5000/apis/weather?state=${state_name}`, /* api 주소 넣는 부분 */
+		url: `/apis/weather?state=${state_name}`, 
 		data: {},
 		success: function(res) {
-			alert(`${state_name}구 에대한 응답을 수신하였습니다.`);
+			loaded();
 			update_weather(res);
+			$("#state_title").empty();
+			$("#state_title").append(state_name);
 		},
 		error: function(...err) {
+			loaded();
 			const message = err[2];
-			alert(`${message}, 에러발생.`);
+			console.log(`${message}, 에러발생.`);
 		}
 	});
 }
 
 function update_weather(data) {
-	alert("응답은 console에");
+	$("#temp-v").empty();
+	$("#hum-v").empty();
+	$("#pm10-v").empty();
+	$("#pm25-v").empty();
+	$("#temp-v").append(data["temperature"]);
+	$("#hum-v").append(data["humidity"]);
+	$("#pm10-v").append(data["pm10Value"]);
+	$("#pm25-v").append(data["pm25Value"]);
 	console.log(data);
 }
 
