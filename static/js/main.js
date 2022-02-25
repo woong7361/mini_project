@@ -7,8 +7,9 @@ function get_weather() {
 		data: {},
 		success: function(res) {
 			loaded();
-			console.log(`${state_name}구 에대한 응답을 수신하였습니다.`);
 			update_weather(res);
+			$("#state_title").empty();
+			$("#state_title").append(state_name);
 		},
 		error: function(...err) {
 			loaded();
