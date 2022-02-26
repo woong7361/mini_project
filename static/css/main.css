@@ -50,6 +50,11 @@ div#card-list {
 	width: 80%;
 	max-width: 1200px;
 	min-width: 800px;
+	margin-bottom: 40px;
+}
+
+div#searchlogger{
+	font-size: 1.1rem;
 }
 
 /* header */

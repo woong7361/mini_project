@@ -1,10 +1,6 @@
 <div class="weather">
 <form>
 	<div class="form-group">
-		<label for="comment-email">Email 주소</label>
-		<input onkeyup="check_form()" type="email" class="form-control" id="comment-email" placeholder="name@example.com">
-	</div>
-	<div class="form-group">
 		<label for="guselect">검색할 지역을 선택하세요.</label>
 		<select class="form-control" id="guselect" onchange="check_form()">
 			<option value="" selected>-----</option>
@@ -24,10 +20,6 @@
 			<option value="종로구">종로구</option>
 			<option value="강서구">강서구</option>
 		</select>
-	</div>
-	<div class="form-group">
-		<label for="comment-text">메모</label>
-		<textarea class="form-control" onkeyup="check_form()" id="comment-text" rows="3"></textarea>
 	</div>
 	<div class="form-group">
 		<button type="button" class="btn btn-lg btn-secondary disabled" id="weather-submit" onclick="get_weather()">알아보기</button>
