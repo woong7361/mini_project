@@ -10,7 +10,7 @@ function get_weather() {
 			if (res["message"])
 				window.alert(res["msg"]);
 
-			res = res["temperature"] ? res : make_mockdata;
+			res = res["temperature"] ? res : make_mockdata();
 			update_weather(res);
 			res["date"] = Date().split("GMT")[0].trimRight();
 			res["state"] = state_name;
@@ -35,6 +35,7 @@ function get_weather() {
 
 function make_mockdata() {
 	let data = {};
+	window.alert("공공데이터 서버이슈로 임의데이터로 처리합니다.");
 	data["temperature"] = "-2"
 	data["humidity"] = "41";
 	data["pm10Value"] = "14";
