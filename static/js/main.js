@@ -7,16 +7,80 @@ function get_weather() {
 		data: {},
 		success: function(res) {
 			loaded();
+			if (res["message"])
+				window.alert(res["msg"]);
+
+			res = res["temperature"] ? res : make_mockdata;
 			update_weather(res);
+			res["date"] = Date().split("GMT")[0].trimRight();
+			res["state"] = state_name;
+			log_weather(res);
+			render_log(res);
 			$("#state_title").empty();
 			$("#state_title").append(state_name);
 		},
 		error: function(...err) {
 			loaded();
-			const message = err[2];
-			console.log(`${message}, 에러발생.`);
+			let res = make_mockdata();
+			update_weather(res);
+			res["date"] = Date().split("GMT")[0].trimRight();
+			res["state"] = state_name;
+			log_weather(res);
+			render_log(res);
+			$("#state_title").empty();
+			$("#state_title").append(state_name);
 		}
 	});
+}
+
+function make_mockdata() {
+	let data = {};
+	data["temperature"] = "-2"
+	data["humidity"] = "41";
+	data["pm10Value"] = "14";
+	data["pm25Value"] = "12";
+
+	return (data);
+}
+function render_log(data) {
+	let to_html = `
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="headingOne">
+			<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				<span>${data["date"]},</span><span>${data["state"]}</span>
+			</button>
+		</h2>
+		<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+		  <div class="accordion-body">
+				<ul class="list-group list-group-horizontal">
+					<li class="list-group-item">기온: ${data["temperature"]}</li>
+					<li class="list-group-item">습도: ${data["humidity"]}</li>
+					<li class="list-group-item">pm25: ${data["pm25Value"]}</li>
+					<li class="list-group-item">pm10: ${data["pm10Value"]}</li>
+				</ul>
+		  </div>
+		</div>
+	</div>
+`;
+	$("#searchlogger").append(to_html);
+}
+
+function log_weather(data) {
+	let logs;
+
+	logs = window.sessionStorage.getItem("w_search_logs");
+	if (logs == null) { 
+		window.sessionStorage.setItem("w_search_logs", JSON.stringify([]));
+		logs = [];
+	} else {
+		logs = JSON.parse(logs);
+	}
+
+	if (data != null)
+		logs.push(data);
+
+	window.sessionStorage.setItem("w_search_logs", JSON.stringify(logs));
+	return (logs);
 }
 
 function update_weather(data) {
@@ -31,27 +95,6 @@ function update_weather(data) {
 	console.log(data);
 }
 
-/*
-function weather_to_html(city, temp) {
-	return (`${temp}`);
-}
-
-
-function get_weather_old() {
-	let state_name = $("#state_input").val();
-
-	alert(val);
-	$.ajax({
-		type: "GET",
-		url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
-		url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
-		data: {},
-		success: function(res) {
-			
-			update_weather(res);
-		}
-	});
-}
-
-
-*/
+$(window).on('load', function () {
+	window.sessionStorage.setItem("w_search_logs", JSON.stringify([]));
+})
